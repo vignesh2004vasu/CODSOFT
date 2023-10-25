@@ -15,31 +15,39 @@ rules = {
     "where are you from": ["I exist in the digital realm, so you can find me online."],
     "favourite color": ["I don't have preferences; I'm just a text-based program."],
     "tell me a fact": ["Sure! Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible."],
+    "laptop":["The top laptop brands are Acer,Dell,Asus,HP "],
+    "mobile":["The top mobile brands are"]
 }
 
 print("Greeting,Hi i am ChatBot with Rule-Based Responses")
 print("You can ask me questions and i will answer to it based one the rules set ")
 
 def generate_response(user_input):
-    user_input = user_input.lower()
+    user_tokens = user_input.lower().split()
     response = "I'm not sure how to respond to that."
 
     for key in rules:
-        if key in user_input:
+        key_tokens = key.split()
+        if all(token in user_tokens for token in key_tokens):
             response = random.choice(rules[key])
             break
 
-        if "fact" in user_input:
-            response = random.choice(rules["tell me a fact"])
-            break;
-        
-        if "color" in user_input:
-            response = random.choice(rules["favourite color"])
-            break;
-        
+    if "hello" in user_tokens or "hi" in user_tokens:
+        response = random.choice(rules["hello"])
+
+    if "fact" in user_tokens:
+        response = random.choice(rules["tell me a fact"])
+
+    if "color" in user_tokens:
+        response = random.choice(rules["favourite color"])
+
+    if "joke" in user_tokens:
+        response = random.choice(rules["tell me a joke"])
+
+    if "laptop" in user_tokens:
+        response = random.choice(rules["laptop"])
 
     return response
-
 
 while True:
     user_input = input("You: ")
